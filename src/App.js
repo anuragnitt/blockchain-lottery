@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { Lottery } from './components/lottery';
+import './styles/app.css';
+import './styles/lottery.css';
 
-function App() {
+export const CryptoLottery = () => {
+
+  const [account, setAccount] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header className="app-header">
+        {
+          window.ethereum === undefined ? (
+            <div className="fail-red">
+              MetaMask not detected.
+              <br/>
+              Please try again from a MetaMask enabled browser.
+            </div>
+          ) : (
+            <Lottery
+              account={account}
+              setAccount={setAccount}
+            />
+          )
+        }
       </header>
     </div>
   );
 }
 
-export default App;
+export default CryptoLottery;
