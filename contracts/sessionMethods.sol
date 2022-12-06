@@ -6,13 +6,15 @@ struct lotterySession {
     mapping (uint256 => address) slots;
     uint256[] filledSlots;
 
-    // bool and uint8 take 1 byte each and together consume one slot
+    // 1+1+20=22 bytes consume one slot
     bool open;
     uint8 profitPercent;
+    address winnerAddress;
 
     // uint256 consumes one slot
     uint256 totalSlots;
     uint256 slotPrice;
+    uint256 winnerSlot;
     uint256 balance;
 }
 
@@ -48,6 +50,14 @@ library SessionMethods {
         return self.profitPercent;
     }
 
+    function getWinnerSlot(lotterySession storage self) public view returns (uint256) {
+        return self.winnerSlot;
+    }
+
+    function getWinnerAddress(lotterySession storage self) public view returns (address) {
+        return self.winnerAddress;
+    }
+
     function start(lotterySession storage self, sessionParams memory _params) internal {
         self.totalSlots = _params.totalSlots;
         self.slotPrice = _params.slotPrice;
@@ -61,7 +71,7 @@ library SessionMethods {
 
     function reset(lotterySession storage self) internal {
         for (uint256 i = 1; i <= self.totalSlots; i++) {
-            self.slots[i] = address(0);
+            self.slots[i] = address(this);
         }
 
         while (self.filledSlots.length > 0) {
@@ -70,16 +80,16 @@ library SessionMethods {
 
         self.open = false;
         self.totalSlots = 0;
-        self.slotPrice = 0;
+        self.winnerSlot = 0;
         self.balance = 0;
-        self.profitPercent = 0;
+        self.winnerAddress = address(this);
     }
 
     function isSlotAvailable(lotterySession storage self, uint256 _slotNum) public view returns (bool) {
         return (
             self.filledSlots.length < self.totalSlots &&
             _slotNum <= self.totalSlots &&
-            self.slots[_slotNum] == 0x0000000000000000000000000000000000000000
+            self.slots[_slotNum] == address(this)
         );
     }
 
@@ -89,16 +99,11 @@ library SessionMethods {
         self.balance += self.slotPrice;
     }
 
-    function selectWinner(lotterySession storage self, uint256 _randomVal) internal view returns (uint256, address) {
-        uint256 winnerIndex = 0;
-        address winnerAddress = address(0);
-
+    function selectWinner(lotterySession storage self, uint256 _randomVal) internal {
         if (self.filledSlots.length > 0) {
-            winnerIndex = _randomVal % self.filledSlots.length;
-            winnerAddress = self.slots[self.filledSlots[winnerIndex]];
+            self.winnerSlot = self.filledSlots[_randomVal % self.filledSlots.length];
+            self.winnerAddress = self.slots[self.winnerSlot];
         }
-
-        return (winnerIndex, winnerAddress);
     }
 
 }

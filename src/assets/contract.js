@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 
-const deployedContract = '0x21A495F2e3AC7002BDDB2191970141a4e4d7D556';
+const deployedContract = '0x6BfB87Aa8EcEEeb639006db86EF661B737E2dDB8';
 const abi = [
 	{
 		"inputs": [],
@@ -19,103 +19,6 @@ const abi = [
 		],
 		"name": "Action",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_slotNum",
-				"type": "uint256"
-			}
-		],
-		"name": "buySlot",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "destroy",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"components": [
-					{
-						"internalType": "uint8",
-						"name": "minProfitPercent",
-						"type": "uint8"
-					},
-					{
-						"internalType": "uint8",
-						"name": "maxProfitPercent",
-						"type": "uint8"
-					},
-					{
-						"internalType": "uint256",
-						"name": "minSlots",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "maxSlots",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "minSlotPrice",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct cryptoLottery.lotteryConfig",
-				"name": "_config",
-				"type": "tuple"
-			}
-		],
-		"name": "setConfig",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"components": [
-					{
-						"internalType": "uint8",
-						"name": "profitPercent",
-						"type": "uint8"
-					},
-					{
-						"internalType": "uint256",
-						"name": "totalSlots",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "slotPrice",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct sessionParams",
-				"name": "_params",
-				"type": "tuple"
-			}
-		],
-		"name": "startLottery",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "stopLottery",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -143,37 +46,6 @@ const abi = [
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address payable",
-				"name": "_receiver",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "transfer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address payable",
-				"name": "_newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"stateMutability": "payable",
 		"type": "fallback"
 	},
@@ -181,18 +53,14 @@ const abi = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_amount",
+				"name": "_slotNum",
 				"type": "uint256"
 			}
 		],
-		"name": "withdraw",
+		"name": "buySlot",
 		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"stateMutability": "payable",
-		"type": "receive"
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -244,6 +112,13 @@ const abi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "destroy",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -369,6 +244,11 @@ const abi = [
 				"type": "uint8"
 			},
 			{
+				"internalType": "address",
+				"name": "winnerAddress",
+				"type": "address"
+			},
+			{
 				"internalType": "uint256",
 				"name": "totalSlots",
 				"type": "uint256"
@@ -376,6 +256,11 @@ const abi = [
 			{
 				"internalType": "uint256",
 				"name": "slotPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "winnerSlot",
 				"type": "uint256"
 			},
 			{
@@ -388,30 +273,129 @@ const abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "winnerAddress",
-		"outputs": [
+		"inputs": [
 			{
-				"internalType": "address payable",
-				"name": "",
-				"type": "address"
+				"components": [
+					{
+						"internalType": "uint8",
+						"name": "minProfitPercent",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "maxProfitPercent",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "minSlots",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "maxSlots",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "minSlotPrice",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct cryptoLottery.lotteryConfig",
+				"name": "_config",
+				"type": "tuple"
 			}
 		],
-		"stateMutability": "view",
+		"name": "setConfig",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint8",
+						"name": "profitPercent",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalSlots",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "slotPrice",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct sessionParams",
+				"name": "_params",
+				"type": "tuple"
+			}
+		],
+		"name": "startLottery",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "winnerSlot",
-		"outputs": [
+		"name": "stopLottery",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "_receiver",
+				"type": "address"
+			},
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "_amount",
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "transfer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "_newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
 	}
 ];
 

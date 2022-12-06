@@ -24,14 +24,12 @@ contract cryptoLottery {
         address prevWinnerAddress;
     }
 
+    address payable public owner;
+
     // structs always starts in a new slot
     lotteryConfig public config;
     lotterySession public session;
     using SessionMethods for lotterySession;
-
-    address payable public owner;
-    address payable public winnerAddress;
-    uint256 public winnerSlot;
 
     // events with indexed arguments are stored in the 'topics' property
     // of logs and can be searched with filters
@@ -39,15 +37,19 @@ contract cryptoLottery {
     event Action(string _comment);
 
     constructor() {
-        config.minSlots = 10;
-        config.maxSlots = 1000;
-        config.minSlotPrice = 0.005 ether;
-        config.minProfitPercent = 20;
-        config.maxProfitPercent = 50;
-
         owner = payable(msg.sender);
-        winnerAddress = payable(address(this));
-        winnerSlot = 0;
+
+        config = lotteryConfig({
+                minSlots: 10,
+                maxSlots: 1000,
+                minSlotPrice: 0.005 ether,
+                minProfitPercent: 20,
+                maxProfitPercent: 50
+        });
+
+        session.profitPercent = config.minProfitPercent;
+        session.slotPrice = config.minSlotPrice;
+        session.winnerAddress = address(this);
     }
 
     fallback() external payable {
@@ -125,7 +127,6 @@ contract cryptoLottery {
         require(_params.slotPrice >= config.minSlotPrice, "Invalid slot slotPrice");
         require(_params.profitPercent >= config.minProfitPercent && _params.profitPercent <= config.maxProfitPercent, "Invalid profit percentage");
 
-        winnerSlot = 0;
         session.reset();
         session.start(_params);
 
@@ -144,13 +145,12 @@ contract cryptoLottery {
             session.getFilledSlots()
         )));
 
-        (uint256 winnerIndex, address _winnerAddress) = session.selectWinner(randomVal);
+        session.selectWinner(randomVal);
+
+        address winnerAddress = session.getWinnerAddress();
 
         // if slots were sold
-        if (_winnerAddress != address(0)) {
-            winnerSlot = winnerIndex + 1;
-            winnerAddress = payable(_winnerAddress);
-
+        if (winnerAddress != address(this)) {
             emit Action("Lottery winner announced");
 
             uint256 sessionBalance = session.getBalance();
@@ -158,23 +158,23 @@ contract cryptoLottery {
             lotteryAmount /= 100;
             assert(lotteryAmount < sessionBalance); // safety check
 
-            transfer(winnerAddress, lotteryAmount);
+            transfer(payable(winnerAddress), lotteryAmount);
+        } else {
+            emit Action("Lottery stopped before any slots were sold");
         }
     }
 
     function onConnect() external view returns (connectResponse memory) {
-        return connectResponse(
-            {
-                config: config,
-                filledSlots: session.getFilledSlots(),
-                totalSlots: session.getTotalSlots(),
-                slotPrice: session.getSlotPrice(),
-                prevWinnerSlot: winnerSlot,
-                profitPercent: session.getProfitPercent(),
-                open: session.isOpen(),
-                prevWinnerAddress: winnerAddress
-            }
-        );
+        return connectResponse({
+            config: config,
+            filledSlots: session.getFilledSlots(),
+            totalSlots: session.getTotalSlots(),
+            slotPrice: session.getSlotPrice(),
+            prevWinnerSlot: session.getWinnerSlot(),
+            profitPercent: session.getProfitPercent(),
+            open: session.isOpen(),
+            prevWinnerAddress: session.getWinnerAddress()
+        });
     }
 
     function buySlot(uint256 _slotNum) external payable lotteryOpen {
