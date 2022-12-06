@@ -133,12 +133,18 @@ contract cryptoLottery {
     }
 
     // winner will be decided and paid automatically when lottery is closed
-    function stopLottery(uint256 _randomVal) external onlyOwner lotteryOpen {
+    function stopLottery() external onlyOwner lotteryOpen {
         session.stop();
 
         emit Action("Lottery session stopped");
 
-        (uint256 winnerIndex, address _winnerAddress) = session.selectWinner(_randomVal);
+        uint256 randomVal = uint256(keccak256(abi.encodePacked(
+            block.difficulty,
+            block.timestamp,
+            session.getFilledSlots()
+        )));
+
+        (uint256 winnerIndex, address _winnerAddress) = session.selectWinner(randomVal);
 
         // if slots were sold
         if (_winnerAddress != address(0)) {

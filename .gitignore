@@ -10,6 +10,7 @@
 
 # production
 .vscode
+*.env
 /build
 
 # misc

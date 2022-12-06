@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './styles/index.css';
+import ReactDOM from 'react-dom';
 import { CryptoLottery } from './app';
+import './styles/index.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <CryptoLottery />
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
-

@@ -17,8 +17,7 @@ export const startLottery = (lotteryParams, fromAddress) => {
 }
 
 export const stopLottery = (fromAddress) => {
-    const random = Math.floor(Math.random() * 1e17).toString();
-    cryptoLottery.methods.stopLottery(random).send({
+    cryptoLottery.methods.stopLottery().send({
         from: fromAddress
     }).then((resp) => {
         console.log(resp);
