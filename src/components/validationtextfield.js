@@ -8,14 +8,14 @@ export const ValidationTextField = (props) => {
     useEffect(() => {
         if (!props.onChange(text)) {
             text ? setErrorMessage(props.errorMessage) : setErrorMessage("");
-            props.setDisabled(true);
+            props.setEntityValid(false);
         }
     }, [text]);
 
     useEffect(() => {
         if (props.onChange(text)) {
             setErrorMessage("");
-            props.setDisabled(false);
+            props.setEntityValid(true);
         }
     }, [text, errorMessage]);
 

@@ -1,6 +1,6 @@
 # Decentralized Lottery System
 
-⚠️ **Not for use on ethereum mainnet or anything involving REAL money** ⚠️
+⚠️ **Currently not for use on the Ethereum mainnet or for anything involving REAL money** ⚠️
 
 ## Setup
 
@@ -20,7 +20,6 @@ Serves on port 3000 by default.
 
 ## Todo
 
-- [ ] Separate variables for valid input in ValdationTextField components. (button disabled = & of all)
 - [ ] Await transaction status then trigger a re-render of UserPage component.
 - [ ] Transaction status (success/revert) notification using MUI Snackbar component.
 - [ ] Use of Chainlink VRF for fetching random numbers in smart contract.

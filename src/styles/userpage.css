@@ -1,0 +1,14 @@
+.text-field {
+    padding-right: 20px;
+}
+
+.text-field-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.balance-container {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
