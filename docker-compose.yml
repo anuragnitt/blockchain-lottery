@@ -3,9 +3,6 @@ services:
   app:
     build:
       context: ./
-      args:
-        - USERNAME=${USERNAME}
-        - PASSWORD=${PASSWORD}
     restart: on-failure
     ports:
       - "3000:3000"

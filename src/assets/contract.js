@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 
-const deployedContract = '0x6BfB87Aa8EcEEeb639006db86EF661B737E2dDB8';
+const deployedContract = '0xeAB4F701a03CC56D9097ecC219927Aa0D60dEF32';
 const abi = [
 	{
 		"inputs": [],

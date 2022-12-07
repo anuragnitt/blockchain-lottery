@@ -13,8 +13,7 @@ Update contract ABI and address in [contract.js](./src/assets/contract.js).
 - `npm run start`
 
 ### Using Docker
-- Fill the details in [.env](./.env.example)
-- `docker-compose up`
+- `docker-compose up -d`
 
 Serves on port 3000 by default.
 
