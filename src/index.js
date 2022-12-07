@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { CryptoLottery } from './app';
+import { CryptoLottery } from './lottery';
 import './styles/index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CryptoLottery />
+    <Lottery />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,6 +1,8 @@
 import Web3 from 'web3';
 
+// address of the contract deployed on the Goerli testnet
 const deployedContract = '0xeAB4F701a03CC56D9097ecC219927Aa0D60dEF32';
+
 const abi = [
 	{
 		"inputs": [],

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Lottery } from './components/lottery';
+import { WalletConnect } from './components/walletconnect';
 import './styles/app.css';
 import './styles/lottery.css';
 
-export const CryptoLottery = () => {
+export const Lottery = () => {
 
   const [account, setAccount] = useState("");
 
@@ -18,7 +18,7 @@ export const CryptoLottery = () => {
               Please try again from a MetaMask enabled browser.
             </div>
           ) : (
-            <Lottery
+            <WalletConnect
               account={account}
               setAccount={setAccount}
             />
@@ -29,4 +29,4 @@ export const CryptoLottery = () => {
   );
 }
 
-export default CryptoLottery;
+export default Lottery;

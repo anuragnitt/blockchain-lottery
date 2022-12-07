@@ -3,7 +3,7 @@ pragma solidity ^0.8.7;
 
 import "./sessionMethods.sol";
 
-contract cryptoLottery {
+contract CryptoLottery {
 
     struct lotteryConfig {
         uint8 minProfitPercent;

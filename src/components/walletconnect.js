@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { web3 } from '../assets/contract';
 import { ContractInteract } from './contractinteract';
 
-export const Lottery = (props) => {
+export const WalletConnect = (props) => {
 
     useEffect(() => {
         window.ethereum.on("chainChanged", () => {
@@ -23,4 +23,4 @@ export const Lottery = (props) => {
     );
 }
 
-export default Lottery;
+export default WalletConnect;
