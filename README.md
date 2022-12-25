@@ -8,14 +8,16 @@ Make sure that the [MetaMask](https://metamask.io/) browser extension is enabled
 
 Update contract ABI and address in [contract.js](./src/assets/contract.js).
 
-### On local system
+### Development
 - `npm install`
 - `npm run start`
 
-### Using Docker
-- `docker-compose up -d`
-
 Serves on port 3000 by default.
+
+### Production
+- `npm run build`
+
+Serve the build directory through a web server application. (eg. Apache2)
 
 ## Todo
 
